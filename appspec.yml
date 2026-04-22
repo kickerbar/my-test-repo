@@ -1,0 +1,14 @@
+version: 0.0
+os: linux
+files:
+  - source: /target/my-app-1.0.jar
+    destination: /home/root/app/
+  - source: /scripts/deploy.sh
+    destination: /home/root/scripts/
+permissions:
+  - object: /home/root/scripts/deploy.sh
+    mode: 755
+hooks:
+  AfterInstall:
+    - location: /home/root/scripts/deploy.sh
+      timeout: 60
