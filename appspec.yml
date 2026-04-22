@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source: /target/my-app-1.0.jar
+  - source: target/my-app-1.0.jar
     destination: /app/
   - source: /scripts/deploy.sh
     destination: /app/scripts/
