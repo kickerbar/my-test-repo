@@ -3,12 +3,12 @@ os: linux
 files:
   - source: target/my-app-1.0.jar
     destination: /app/
-  - source: /scripts/deploy.sh
+  - source: scripts/deploy.sh
     destination: /app/scripts/
 permissions:
   - object: /app/scripts/deploy.sh
     mode: 755
 hooks:
   AfterInstall:
-    - location: /app/scripts/deploy.sh
+    - location: scripts/deploy.sh
       timeout: 60
