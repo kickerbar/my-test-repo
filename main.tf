@@ -19,9 +19,8 @@ variable "my_subnet_no"      { default = "295526" }
 
 resource "ncloud_init_script" "spring_build_init" {
   name    = "tf-spring-build-init"
-  content = <<EOF
-#!/bin/bash
-dnf install -y java-17-openjdk git maven httpd
+  content = file("${path.module}/init.sh")
+}
 
 git clone https://github.com/kickerbar/my-test-repo.git /opt/myapp
 cd /opt/myapp
