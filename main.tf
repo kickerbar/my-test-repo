@@ -19,7 +19,7 @@ variable "my_subnet_no"      { default = "295526" }
 
 resource "ncloud_init_script" "spring_build_init" {
   name    = "tf-spring-build-init"
-  content = "#!/bin/bash\ncurl -o /tmp/init.sh http://192.168.30.6:8080/userContent/init.sh\nbash /tmp/init.sh"
+  content = "#!/bin/bash\ncurl -s http://192.168.30.6:8080/userContent/init.sh | bash"
 }
 
 resource "ncloud_server" "server" {
