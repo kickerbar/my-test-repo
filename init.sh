@@ -7,7 +7,7 @@ nohup java -jar target/*.jar > /opt/app.log 2>&1 &
 echo "ProxyRequests Off" > /etc/httpd/conf.d/proxy.conf
 echo "ProxyPreserveHost On" >> /etc/httpd/conf.d/proxy.conf
 echo "<VirtualHost *:80>" >> /etc/httpd/conf.d/proxy.conf
-echo "ProxyPass / http://127.0.0.1:8080/" >> /etc/httpd/conf.d/proxy.conf
-echo "ProxyPassReverse / http://127.0.0.1:8080/" >> /etc/httpd/conf.d/proxy.conf
+echo "    ProxyPass / http://127.0.0.1:8080/" >> /etc/httpd/conf.d/proxy.conf
+echo "    ProxyPassReverse / http://127.0.0.1:8080/" >> /etc/httpd/conf.d/proxy.conf
 echo "</VirtualHost>" >> /etc/httpd/conf.d/proxy.conf
 systemctl enable --now httpd
