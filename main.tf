@@ -17,20 +17,12 @@ variable "ncloud_access_key" { type = string }
 variable "ncloud_secret_key" { type = string }
 variable "my_subnet_no"      { default = "295526" }
 
-resource "ncloud_init_script" "spring_build_init" {
-  name    = "tf-spring-build-init"
-  content = "#!/bin/bash\ncurl -s http://192.168.30.6:8080/userContent/init.sh | bash"
-}
-
 resource "ncloud_server" "server" {
   name                      = "tf-test-springboot-build"
   subnet_no                 = var.my_subnet_no
   server_image_product_code = "SW.VSVR.OS.LNX64.ROCKY.0810.B050" 
   server_product_code       = "SVR.VSVR.HICPU.C002.M004.NET.SSD.B050.G002" 
   login_key_name            = "heokey"
-  init_script_no            = ncloud_init_script.spring_build_init.id
-  
-  depends_on = [ncloud_init_script.spring_build_init]
 }
 
 resource "ncloud_public_ip" "public_ip" {
