@@ -19,27 +19,8 @@ variable "my_subnet_no"      { default = "295526" }
 
 resource "ncloud_init_script" "spring_build_init" {
   name    = "tf-spring-build-init"
+  # 여기서 파일 내용을 불러옵니다.
   content = file("${path.module}/init.sh")
-}
-
-git clone https://github.com/kickerbar/my-test-repo.git /opt/myapp
-cd /opt/myapp
-
-mvn clean package -DskipTests
-
-nohup java -jar target/*.jar > /opt/app.log 2>&1 &
-
-cat << 'EOF_CONF' > /etc/httpd/conf.d/proxy.conf
-ProxyRequests Off
-ProxyPreserveHost On
-<VirtualHost *:80>
-    ProxyPass / http://127.0.0.1:8080/
-    ProxyPassReverse / http://127.0.0.1:8080/
-</VirtualHost>
-EOF_CONF
-
-systemctl enable --now httpd
-EOF
 }
 
 resource "ncloud_server" "server" {
