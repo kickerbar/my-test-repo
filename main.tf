@@ -27,7 +27,6 @@ resource "ncloud_server" "server" {
 
 resource "ncloud_public_ip" "public_ip" {
   server_instance_no = ncloud_server.server.id
-  depends_on         = [ncloud_server.server]
 }
 
 output "server_public_ip" {
