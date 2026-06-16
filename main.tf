@@ -23,6 +23,10 @@ resource "ncloud_server" "server" {
   server_image_product_code = "SW.VSVR.OS.LNX64.ROCKY.0810.B050" 
   server_product_code       = "SVR.VSVR.HICPU.C002.M004.NET.SSD.B050.G002" 
   login_key_name            = "heokey"
+  user_data = <<-EOT
+    #!/bin/bash
+    echo "${file("/tmp/heokey.pub")}" >> /root/.ssh/authorized_keys
+  EOT
 }
 
 resource "ncloud_public_ip" "public_ip" {
