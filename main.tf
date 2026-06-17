@@ -23,6 +23,12 @@ resource "ncloud_server" "server" {
   server_image_product_code = "SW.VSVR.OS.LNX64.ROCKY.0810.B050" 
   server_product_code       = "SVR.VSVR.HICPU.C002.M004.NET.SSD.B050.G002" 
   login_key_name            = "heokey"
+  
+  user_data = <<-EOT
+    #cloud-config
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCBRXlIGdtDw+2LwWzVBjbZu6CFMYG28iJbX0LuAXAWYjOyw2My4lI22JqaaUUL+P6luMaYBoxzCZE74gUBSHtXSV1CyXaAvogmqgBu5453gMLDpLBeFCZejcFWhnlaBLhUjzcNEO2qCjeQVJYv3nx1wV5xmy86pUr90tgs/T80+eI2AS5Yq8qHEc1SLoH3TDzPf++C+lwHaiXcwAef+HB00sWyORmwBM5hIBlFqIvUJn5WwbF1WlopISvJsODRsd6/DrtKfumkJxPpIfwtxbV3s7xsU++Oao3jHBKFYzMs6pSOjIWCQG2eN8nXmL+OBr7h1satO3owPXbj+NzDJ2pT
+  EOT
 }
 
 resource "ncloud_public_ip" "public_ip" {
