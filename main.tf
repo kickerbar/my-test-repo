@@ -17,10 +17,10 @@ variable "ncloud_access_key" { type = string }
 variable "ncloud_secret_key" { type = string }
 variable "my_subnet_no"      { default = "295526" }
 
-# 아주 단순한 비밀번호 초기화 스크립트 (400 에러 회피용)
-resource "ncloud_init_script" "set_password" {
-  name    = "set-root-password-v1"
-  content = "#!/bin/bash\necho 'root:Welcome123!@#' | chpasswd\nsed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config\nsystemctl restart sshd"
+# 400 에러를 완벽히 회피한 한 줄 텍스트 방식의 Init Script
+resource "ncloud_init_script" "inject_key" {
+  name    = "inject-heokey-final"
+  content = "#!/bin/bash\nmkdir -p /root/.ssh\necho 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCBRXlIGdtDw+2LwWzVBjbZu6CFMYG28iJbX0LuAXAWYjOyw2My4lI22JqaaUUL+P6luMaYBoxzCZE74gUBSHtXSV1CyXaAvogmqgBu5453gMLDpLBeFCZejcFWhnlaBLhUjzcNEO2qCjeQVJYv3nx1wV5xmy86pUr90tgs/T80+eI2AS5Yq8qHEc1SLoH3TDzPf++C+lwHaiXcwAef+HB00sWyORmwBM5hIBlFqIvUJn5WwbF1WlopISvJsODRsd6/DrtKfumkJxPpIfwtxbV3s7xsU++Oao3jHBKFYzMs6pSOjIWCQG2eN8nXmL+OBr7h1satO3owPXbj+NzDJ2pT' >> /root/.ssh/authorized_keys\nchmod 700 /root/.ssh\nchmod 600 /root/.ssh/authorized_keys"
 }
 
 resource "ncloud_server" "server" {
@@ -28,9 +28,8 @@ resource "ncloud_server" "server" {
   subnet_no                 = var.my_subnet_no
   server_image_product_code = "SW.VSVR.OS.LNX64.ROCKY.0810.B050" 
   server_product_code       = "SVR.VSVR.HICPU.C002.M004.NET.SSD.B050.G002" 
-  
-  # 키 대신 스크립트로 비밀번호를 고정합니다.
-  init_script_no            = ncloud_init_script.set_password.id
+  login_key_name            = "heokey"
+  init_script_no            = ncloud_init_script.inject_key.id
 }
 
 resource "ncloud_public_ip" "public_ip" {
